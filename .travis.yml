@@ -1,0 +1,15 @@
+language: ruby
+services:
+- postgresql
+rvm:
+- 2.4.2
+install:
+- git clone --depth 1 https://github.com/diaspora/diaspora.git
+- cp diaspora.yml diaspora/config/diaspora.yml
+- cp database.yml diaspora/config/database.yml
+- export TRAVIS_BUILD_DIR=$(pwd)/diaspora
+- cd $TRAVIS_BUILD_DIR
+- bundle install
+- bundle exec rake db:create db:migrate
+script:
+- bash script/server
